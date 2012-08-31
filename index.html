@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	
+	<!-- META -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	
+	<!-- Force latest IE rendering engine (even in intranet) & Chrome Frame -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<!-- tell mobile browsers to scale -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	
+	<title>colRespond Test Page</title>
+	
+	<!-- Media queries setting coloums to body:after content -->
+	<style type="text/css">
+		
+		/*
+			You should remove the element containing coloum data 
+			body:after { display: none; }
+		*/
+
+		@media screen and (min-width: 15em) {
+			body:after { content: "4"; }
+		}
+
+		@media screen and (min-width: 30.0625em) {
+			body:after { content: "6"; }
+		}
+
+		@media screen and (min-width: 37.5em) {
+			body:after { content: "8"; }
+		}
+
+		@media screen and (min-width: 57em) {
+			body:after { content: "12"; }	
+		}
+
+		@media screen and (min-width: 75em) {
+			body:after { content: "16"; }
+		}
+
+
+	</style>
+
+</head>
+<body>
+
+	<p id="output"></p>
+
+	<!-- Javascript -->
+	<script>
+		// make console.log safe to use
+		window.console||(console={log:function(){}});
+	</script>
+	
+	<script src="js/jColumnRespond.js"></script>
+	
+	<script>
+		
+		// call colRespond and add breakpoints
+		var colRes = colRespond([
+			{
+				label: 'handheld',
+				coloums: 4
+			},{
+				label: 'small-tablet',
+				coloums: 6
+			},{
+				label: 'large-tablet',
+				coloums: 8
+			},{
+				label: 'laptop',
+				coloums: 12
+			},{
+				label: 'desktop',
+				coloums: 16
+			}
+		]);
+		
+		// usage
+		var outputStr = document.getElementById('output');
+		
+		colRes.addFunc({
+			breakpoint: ['laptop','tablet'],
+			enter: function() {
+				console.log('>>> run this for the LAPTOP/TABLET breakpoint <<<');
+			},
+			exit: function() {
+				console.log('<<< destroy this when exiting the LAPTOP/TABLET breakpoint >>>');
+			}
+		});
+
+		colRes.addFunc({
+			breakpoint: 'desktop',
+			enter: function() {
+				console.log('>>> run this for the DESKTOP breakpoint <<<');
+				outputStr.innerHTML = 'current breakpoint: desktop';
+			},
+			exit: function() {
+				console.log('<<< destroy this when exiting the DESKTOP breakpoint >>>');
+			}
+		});
+		
+		colRes.addFunc({
+			breakpoint: 'laptop',
+			enter: function() {
+				outputStr.innerHTML = 'current breakpoint: laptop';
+			}
+		});
+		
+		colRes.addFunc({
+			breakpoint: 'large-tablet',
+			enter: function() {
+				outputStr.innerHTML = 'current breakpoint: large-tablet';
+			}
+		});
+
+		colRes.addFunc({
+			breakpoint: 'small-tablet',
+			enter: function() {
+				outputStr.innerHTML = 'current breakpoint: small-tablet';
+			}
+		});
+		
+		colRes.addFunc({
+			breakpoint: 'handheld',
+			enter: function() {
+				console.log('>>> run this for the HANDHELD breakpoint <<<');
+				outputStr.innerHTML = 'current breakpoint: handheld';
+			},
+			exit: function() {
+				console.log('<<< destroy this when exiting the HANDHELD breakpoint >>>');
+			}
+		});
+		
+		colRes.addFunc({
+			breakpoint: '*',
+			enter: function() {
+				console.log('>>> run this when entering EVERY breakpoint <<<');
+			},
+			exit: function() {
+				console.log('<<< run this when exiting EVERY breakpoint >>>');
+			}
+		});
+	</script>
+
+</body>
+</html>
