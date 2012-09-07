@@ -142,7 +142,7 @@
 		// find out what the current cols are - eg body:after { content: 'currCols'; }
 		var measurecolumns = function() {
 			var bodyAfterContent = window.getComputedStyle(document.body,':after').getPropertyValue('content');
-			currCols = Number(bodyAfterContent.replace( /"/g, '' ));
+			currCols = Number( bodyAfterContent.replace( /"/g, '' ).replace( /'/g, '' ) );
 			return currCols;
 		};
 
